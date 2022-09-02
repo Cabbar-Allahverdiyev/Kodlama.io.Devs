@@ -2,6 +2,7 @@
 using Application.Features.ProgramingLanguages.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
+using Domain.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -11,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace Application.Features.ProgramingLanguages.Commands.Create
 {
-    public class CreateProgramingLanguageCommand : IRequest<CreateProgramingLanguageDto>
+    public class CreateProgramingLanguageCommand : IRequest<CreatedProgramingLanguageDto>
     {
         public string Name { get; set; }
         public class CreateProgramingLanguageCommandHandler : IRequestHandler<CreateProgramingLanguageCommand,
-                                                                            CreateProgramingLanguageDto>
+                                                                            CreatedProgramingLanguageDto>
         {
             private readonly IProgramingLanguageRepository _programingLanguageepository;
             private readonly IMapper _mapper;
@@ -30,10 +31,14 @@ namespace Application.Features.ProgramingLanguages.Commands.Create
                 _programingLanguageBusinessRules = programingLanguageBusinessRules;
             }
 
-            public async Task<CreateProgramingLanguageDto> Handle(CreateProgramingLanguageCommand request, CancellationToken cancellationToken)
+            public async Task<CreatedProgramingLanguageDto> Handle(CreateProgramingLanguageCommand request, CancellationToken cancellationToken)
             {
                 await _programingLanguageBusinessRules.ProgramingLanguageNameCanNotBeDuplicatedWhenInserted(request.Name);
 
+                ProgramingLanguage mappedProgLanguage = _mapper.Map<ProgramingLanguage>(request);
+                ProgramingLanguage cretedProgramingLanguage = await _programingLanguageepository.AddAsync(mappedProgLanguage);
+                CreatedProgramingLanguageDto createProgramingLanguageDto = _mapper.Map<CreatedProgramingLanguageDto>(cretedProgramingLanguage);
+                return createProgramingLanguageDto;
 
             }
         }

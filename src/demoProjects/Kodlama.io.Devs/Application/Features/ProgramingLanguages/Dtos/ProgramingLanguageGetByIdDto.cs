@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.ProgramingLanguages.Dtos
 {
-    public class CreateProgramingLanguageDto
+    public class ProgramingLanguageGetByIdDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
