@@ -10,20 +10,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.ProgramingLanguages.Queries.GetById
+namespace Application.Features.ProgramingLanguages.Queries.GetByName
 {
-    public class GetByIdProgramingLanguageQuery : IRequest<ProgramingLanguageGetByIdDto>
+    public class GetByNameProgramingLanguageQuery : IRequest<ProgramingLanguageGetByNameDto>
     {
-        public int Id { get; set; }
-
-        public class GetByIdProgramingLanguageQueryHandler : IRequestHandler<GetByIdProgramingLanguageQuery,
-                                                                            ProgramingLanguageGetByIdDto>
+        public string Name { get; set; }
+        
+        public class GetByNameProgramingLanguageQueryHandler : IRequestHandler<GetByNameProgramingLanguageQuery,
+                                                                               ProgramingLanguageGetByNameDto>
         {
             private readonly IProgramingLanguageRepository _programingLanguageRepository;
             private readonly IMapper _mapper;
             private readonly ProgramingLanguageBusinessRules _programingLanguageBusinessRules;
 
-            public GetByIdProgramingLanguageQueryHandler(IProgramingLanguageRepository programingLanguageRepository,
+            public GetByNameProgramingLanguageQueryHandler(IProgramingLanguageRepository programingLanguageRepository,
                                                          IMapper mapper,
                                                          ProgramingLanguageBusinessRules programingLanguageBusinessRules)
             {
@@ -32,15 +32,18 @@ namespace Application.Features.ProgramingLanguages.Queries.GetById
                 _programingLanguageBusinessRules = programingLanguageBusinessRules;
             }
 
-            public async Task<ProgramingLanguageGetByIdDto> Handle(GetByIdProgramingLanguageQuery request, CancellationToken cancellationToken)
+            public async Task<ProgramingLanguageGetByNameDto> Handle(GetByNameProgramingLanguageQuery request, CancellationToken cancellationToken)
             {
-                ProgramingLanguage? programingLanguage = await _programingLanguageRepository.GetAsync(p => p.Id == request.Id);
+                ProgramingLanguage? programingLanguage = await _programingLanguageRepository
+                                                                .GetAsync(p => p.Name.ToLower() == request.Name.ToLower());
 
                 await _programingLanguageBusinessRules.ProgramingLanguageShouldExistsWhenRequested(programingLanguage);
 
-                ProgramingLanguageGetByIdDto programingLanguageGetByIdDto =
-                    _mapper.Map<ProgramingLanguageGetByIdDto>(programingLanguage);
-                return programingLanguageGetByIdDto;
+                ProgramingLanguageGetByNameDto result = _mapper.Map<ProgramingLanguageGetByNameDto>(programingLanguage);
+                return result;  
+
+
+
             }
         }
     }
