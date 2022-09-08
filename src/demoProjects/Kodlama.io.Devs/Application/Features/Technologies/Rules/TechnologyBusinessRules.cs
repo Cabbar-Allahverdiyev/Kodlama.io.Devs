@@ -1,4 +1,5 @@
-﻿using Application.Features.Technologies.Constants.Messages;
+﻿using Application.Features.Technologies.Commands.Update;
+using Application.Features.Technologies.Constants.Messages;
 using Application.Services.Repositories;
 using Core.CrossCuttingConcerns.Exceptions;
 using Core.Persistence.Paging;
@@ -28,6 +29,19 @@ namespace Application.Features.Technologies.Rules
             IPaginate<Technology> result = await _technologyRepository.GetListAsync(
                 p => p.Name.ToLower() == name.ToLower());
             if (result.Items.Any()) throw new BusinessException(TechnologyBusinessRuleMessages.NameExists);
+        } 
+        
+        public async Task TechnologyNameCanNotBeDuplicatedWhenUpdated(UpdateTechnologyCommand command)
+        {
+            IPaginate<Technology> result = await _technologyRepository.GetListAsync(p => p.Name.ToLower() == command.Model.Name.ToLower());
+            if (result.Items.Any())
+            {
+                foreach (var item in result.Items)
+                {
+                    if (item.Id != command.Id) throw new BusinessException(TechnologyBusinessRuleMessages.NameExists);
+
+                }
+            }
         }
 
         public async Task ProgramingLanguageExists(int programingLanguageId)

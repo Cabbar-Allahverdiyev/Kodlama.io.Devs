@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Technologies.Dtos
 {
-    public class CreateTechologyDto
+    public class UpdatedTechnologyDto
     {
         public string Name { get; set; }
         public string ProgramingLanguageName { get; set; }
