@@ -24,7 +24,7 @@ namespace Application.Features.ProgramingLanguages.Rules
         public async Task ProgramingLanguageNameCanNotBeDuplicatedWhenInserted(string name)
         {
             IPaginate<ProgramingLanguage> result = await _programingLanguageRepository.GetListAsync(p => p.Name.ToLower() == name.ToLower());
-            if (result.Items.Any()) throw new BusinessException(ProgramingLanguageMessages.NameExists);
+            if (result.Items.Any()) throw new BusinessException(ProgramingLanguageBusinessRuleMessages.NameExists);
         }
 
         public async Task ProgramingLanguageNameCanNotBeDuplicatedWhenUpdated(UpdatedProgramingLanguageDto programingLanguage)
@@ -34,7 +34,7 @@ namespace Application.Features.ProgramingLanguages.Rules
             {
                 foreach (var item in result.Items)
                 {
-                    if (item.Id != programingLanguage.Id) throw new BusinessException(ProgramingLanguageMessages.NameExists);
+                    if (item.Id != programingLanguage.Id) throw new BusinessException(ProgramingLanguageBusinessRuleMessages.NameExists);
 
                 }
             }
@@ -43,7 +43,7 @@ namespace Application.Features.ProgramingLanguages.Rules
 
         public async Task ProgramingLanguageShouldExistsWhenRequested(ProgramingLanguage programingLanguage)
         {
-            if (programingLanguage == null) throw new BusinessException(ProgramingLanguageMessages.RequestedDoesNotExists);
+            if (programingLanguage == null) throw new BusinessException(ProgramingLanguageBusinessRuleMessages.RequestedDoesNotExists);
         }
     }
 }
