@@ -19,9 +19,4 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\Technologies\Models\Queries\" />
-    <Folder Include="Features\Technologies\Queries\" />
-  </ItemGroup>
-
 </Project>

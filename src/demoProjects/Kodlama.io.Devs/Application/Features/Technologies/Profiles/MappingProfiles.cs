@@ -2,7 +2,9 @@
 using Application.Features.Technologies.Commands.Update;
 using Application.Features.Technologies.Dtos;
 using Application.Features.Technologies.Models.Commands;
+using Application.Features.Technologies.Models.Queries;
 using AutoMapper;
+using Core.Persistence.Paging;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -24,6 +26,13 @@ namespace Application.Features.Technologies.Profiles
                 .ForMember(t => t.ProgramingLanguageId, opt => opt.MapFrom(c => c.Model.ProgramingLanguageId))
                 .ForMember(t => t.Name, opt => opt.MapFrom(c => c.Model.Name))
                 .ReverseMap();
+
+            CreateMap<Technology, DeletedTechnologyDto>().ReverseMap();
+
+
+            CreateMap<IPaginate<Technology>, TechnologyListModel>().ReverseMap();
+
+            CreateMap<Technology, TechnologyListDto>().ReverseMap();
 
         }
     }

@@ -53,6 +53,13 @@ namespace Application.Features.Technologies.Rules
                 throw new BusinessException(TechnologyBusinessRuleMessages.ProgramingLanguageMustBeInTheSystem);
         }
 
+        public async Task TechnologyExists(Technology technology)
+        {
+           
+            if (technology is null)
+                throw new BusinessException(TechnologyBusinessRuleMessages.ProgramingLanguageMustBeInTheSystem);
+        }
+
 
     }
 }
