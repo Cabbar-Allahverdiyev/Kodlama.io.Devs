@@ -40,7 +40,6 @@ namespace Application.Features.Technologies.Commands.Update
                 await _technologyBusinessRules.ProgramingLanguageExists(request.Model.ProgramingLanguageId);
 
                 Technology updatedTech = _mapper.Map<Technology>(request);
-                //updatedTech.Id = request.Id;
                 updatedTech = await _technologyRepository.UpdateAsync(updatedTech);
                 UpdatedTechnologyDto mappedUpdateDto = _mapper.Map<UpdatedTechnologyDto>(updatedTech);
                 return mappedUpdateDto;
