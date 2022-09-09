@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Core.Security.Entities;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -14,6 +15,9 @@ namespace Persistence.Contexts
         protected IConfiguration Configuration { get; set; }
         public DbSet<ProgramingLanguage> ProgramingLanguages { get; set; }
         public DbSet<Technology> Technologies { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
+        public DbSet<OperationClaim> OperationClaims { get; set; }
 
         public BaseDbContext(DbContextOptions dbContextOptions,IConfiguration configuration):base(dbContextOptions)
         {
@@ -46,6 +50,43 @@ namespace Persistence.Contexts
                 a.Property(p => p.Name).HasColumnName("Name");
 
                 a.HasOne(p => p.ProgramingLanguage);
+            });
+
+            modelBuilder.Entity<User>(a =>
+            {
+                a.ToTable("Users").HasKey(k => k.Id);
+                a.Property(u => u.Id).HasColumnName("Id");
+                a.Property(u => u.FirstName).HasColumnName("FirstName");
+                a.Property(u => u.LastName).HasColumnName("LastName");
+                a.Property(u => u.Email).HasColumnName("Email");
+                a.Property(u => u.PasswordSalt).HasColumnName("PasswordSalt");
+                a.Property(u => u.PasswordHash).HasColumnName("PasswordHash");
+                a.Property(u => u.Status).HasColumnName("Status");
+
+                a.HasMany(u => u.UserOperationClaims);
+               // a.HasMany(u => u.RefreshTokens);
+            });
+
+            modelBuilder.Entity<OperationClaim>(a =>
+            {
+                a.ToTable("OperationClaims").HasKey(k => k.Id);
+                a.Property(p => p.Id).HasColumnName("Id");
+                a.Property(p => p.Name).HasColumnName("Name");
+              
+
+              //  a.HasMany(p => p.);
+            });
+
+            modelBuilder.Entity<UserOperationClaim>(a =>
+            {
+                a.ToTable("UserOperationClaims").HasKey(k => k.Id);
+                a.Property(p => p.Id).HasColumnName("Id");
+                a.Property(p => p.UserId).HasColumnName("UserId");
+                a.Property(p => p.OperationClaimId).HasColumnName("OperationClaimId");
+
+
+                a.HasOne(p => p.OperationClaim);
+                a.HasOne(p => p.User);
             });
 
             ProgramingLanguage[] programingLanguageEntitySeeds = {new (1,"C#"),
