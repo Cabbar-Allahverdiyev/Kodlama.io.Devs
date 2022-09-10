@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Persistence.Contexts
 {
-    public class BaseDbContext :DbContext
+    public class BaseDbContext : DbContext
     {
         protected IConfiguration Configuration { get; set; }
         public DbSet<ProgramingLanguage> ProgramingLanguages { get; set; }
@@ -18,26 +18,27 @@ namespace Persistence.Contexts
         public DbSet<User> Users { get; set; }
         public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
         public DbSet<OperationClaim> OperationClaims { get; set; }
+        public DbSet<UserSocialMediaAddress> UserSocialMediaAddresses { get; set; }
 
-        public BaseDbContext(DbContextOptions dbContextOptions,IConfiguration configuration):base(dbContextOptions)
+        public BaseDbContext(DbContextOptions dbContextOptions, IConfiguration configuration) : base(dbContextOptions)
         {
-            Configuration=configuration;
+            Configuration = configuration;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-        //    if (!optionsBuilder.IsConfigured)
-        //        base.OnConfiguring(
-        //            optionsBuilder.UseSqlServer(Configuration.GetConnectionString("KodlamaIODevsConnectionString")));
+            //    if (!optionsBuilder.IsConfigured)
+            //        base.OnConfiguring(
+            //            optionsBuilder.UseSqlServer(Configuration.GetConnectionString("KodlamaIODevsConnectionString")));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ProgramingLanguage>(a=>
+            modelBuilder.Entity<ProgramingLanguage>(a =>
             {
                 a.ToTable("ProgramingLanguages").HasKey(k => k.Id);
-                a.Property(p=>p.Id).HasColumnName("Id");
-                a.Property(p=>p.Name).HasColumnName("Name");
+                a.Property(p => p.Id).HasColumnName("Id");
+                a.Property(p => p.Name).HasColumnName("Name");
 
                 a.HasMany(p => p.Technologies);
             });
@@ -64,7 +65,7 @@ namespace Persistence.Contexts
                 a.Property(u => u.Status).HasColumnName("Status");
 
                 a.HasMany(u => u.UserOperationClaims);
-               // a.HasMany(u => u.RefreshTokens);
+                // a.HasMany(u => u.RefreshTokens);
             });
 
             modelBuilder.Entity<OperationClaim>(a =>
@@ -72,9 +73,9 @@ namespace Persistence.Contexts
                 a.ToTable("OperationClaims").HasKey(k => k.Id);
                 a.Property(p => p.Id).HasColumnName("Id");
                 a.Property(p => p.Name).HasColumnName("Name");
-              
 
-              //  a.HasMany(p => p.);
+
+                //  a.HasMany(p => p.);
             });
 
             modelBuilder.Entity<UserOperationClaim>(a =>
@@ -86,6 +87,16 @@ namespace Persistence.Contexts
 
 
                 a.HasOne(p => p.OperationClaim);
+                a.HasOne(p => p.User);
+            });
+
+            modelBuilder.Entity<UserSocialMediaAddress>(a =>
+            {
+                a.ToTable("UserSocialMediaAddresses").HasKey(k => k.Id);
+                a.Property(p => p.Id).HasColumnName("Id");
+                a.Property(p => p.UserId).HasColumnName("UserId");
+                a.Property(p => p.GithubUrl).HasColumnName("GithubUrl");
+
                 a.HasOne(p => p.User);
             });
 

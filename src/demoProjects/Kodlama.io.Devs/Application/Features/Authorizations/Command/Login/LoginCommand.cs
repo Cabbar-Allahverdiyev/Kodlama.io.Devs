@@ -15,9 +15,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Authorizations.Command
+namespace Application.Features.Authorizations.Command.Login
 {
-    public class LoginCommand:IRequest<LoginedDto>
+    public class LoginCommand : IRequest<LoginedDto>
     {
         public UserForLoginDto UserForLoginDto { get; set; }
 
@@ -38,7 +38,7 @@ namespace Application.Features.Authorizations.Command
 
             public async Task<LoginedDto> Handle(LoginCommand request, CancellationToken cancellationToken)
             {
-                User? user = await _userRepository.GetAsync(u=>u.Email==request.UserForLoginDto.Email);
+                User? user = await _userRepository.GetAsync(u => u.Email == request.UserForLoginDto.Email);
 
                 await _authBusinessRules.UserShouldExistsWhenRequested(user);
 
@@ -47,7 +47,7 @@ namespace Application.Features.Authorizations.Command
                 AccessToken token = await _authService.CreateAccessToken(user);
                 LoginedDto loginedDto = new() { AccessToken = token };
                 return loginedDto;
-               
+
             }
         }
     }

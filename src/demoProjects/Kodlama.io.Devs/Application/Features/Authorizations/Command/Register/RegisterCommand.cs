@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Authorizations.Command
+namespace Application.Features.Authorizations.Command.Register
 {
     public class RegisterCommand : IRequest<RegisteredDto>
     {

@@ -1,6 +1,7 @@
 ﻿using Application.Features.Authorizations.Rules;
 using Application.Features.ProgramingLanguages.Rules;
 using Application.Features.Technologies.Rules;
+using Application.Features.UserSocialMediaAddresses.Rules;
 using Application.Services.AuthService;
 using Core.Application.Pipelines.Authorization;
 using Core.Application.Pipelines.Validation;
@@ -27,6 +28,7 @@ namespace Application
             services.AddScoped<ProgramingLanguageBusinessRules>();
             services.AddScoped<TechnologyBusinessRules>();
             services.AddScoped<AuthBusinessRules>();
+            services.AddScoped<UserSocialMediaAddressBusinessRules>();
 
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehavior<,>));

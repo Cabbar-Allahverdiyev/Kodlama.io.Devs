@@ -1,4 +1,5 @@
-﻿using Application.Features.Authorizations.Command;
+﻿using Application.Features.Authorizations.Command.Login;
+using Application.Features.Authorizations.Command.Register;
 using Application.Features.Authorizations.Dtos;
 using Core.Security.Dtos;
 using Microsoft.AspNetCore.Http;
