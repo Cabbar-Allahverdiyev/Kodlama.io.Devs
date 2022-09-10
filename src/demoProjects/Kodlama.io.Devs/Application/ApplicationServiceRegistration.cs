@@ -1,4 +1,5 @@
-﻿using Application.Features.ProgramingLanguages.Rules;
+﻿using Application.Features.Authorizations.Rules;
+using Application.Features.ProgramingLanguages.Rules;
 using Application.Features.Technologies.Rules;
 using Application.Services.AuthService;
 using Core.Application.Pipelines.Authorization;
@@ -25,6 +26,7 @@ namespace Application
 
             services.AddScoped<ProgramingLanguageBusinessRules>();
             services.AddScoped<TechnologyBusinessRules>();
+            services.AddScoped<AuthBusinessRules>();
 
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehavior<,>));
@@ -34,7 +36,7 @@ namespace Application
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
 
             services.AddScoped<IAuthService,AuthManager>();
-            services.AddTransient<ITokenHelper,JwtHelper>();// bax
+           // services.AddTransient<ITokenHelper,JwtHelper>();// bax
 
             // services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             return services;

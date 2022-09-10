@@ -21,5 +21,17 @@ namespace WebAPI.Controllers
             RegisteredDto registeredDto = await Mediator.Send(registerCommand);
             return Created("", registeredDto.AccessToken);
         }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] UserForLoginDto userForLoginDto)
+        {
+            LoginCommand loginCommand = new LoginCommand
+            {
+                UserForLoginDto = userForLoginDto
+            };
+
+            LoginedDto loginedDto = await Mediator.Send(loginCommand);
+            return Created("", loginedDto.AccessToken);
+        }
     }
 }
