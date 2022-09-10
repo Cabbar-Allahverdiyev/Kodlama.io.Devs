@@ -4,6 +4,7 @@ using Application.Features.UserSocialMediaAddresses.Models.Commands;
 using Application.Features.UserSocialMediaAddresses.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Core.Security.Entities;
 using Domain.Entities;
 using MediatR;
@@ -16,8 +17,11 @@ using System.Threading.Tasks;
 namespace Application.Features.UserSocialMediaAddresses.Commands.Create
 {
     public class CreateUserSocialMediaAddressCommand :IRequest<CreatedUserSocialMediaAddressDto>
+                                                      ,ISecuredRequest
     {
         public CreateUserSocialMediaAddressModel Model { get; set; }
+
+        public string[] Roles { get; } = {  };
 
         public class CreateUserSocialMediaAddressCommandHandler :IRequestHandler<CreateUserSocialMediaAddressCommand,
                                                                                  CreatedUserSocialMediaAddressDto>
