@@ -43,6 +43,7 @@ namespace Application.Features.Authorizations.Command.Register
                 };
                 User createdUser = await _userRepository.AddAsync(user);
 
+              //  AccessToken createdAccessToken = await _authService.CreateAccessToken(createdUser);
                 AccessToken createdAccessToken = await _authService.CreateAccessToken(createdUser);
                 RegisteredDto registeredDto = new RegisteredDto
                 {

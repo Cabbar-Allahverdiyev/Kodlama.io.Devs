@@ -15,10 +15,20 @@ namespace Application.Features.UserSocialMediaAddresses.Profiles
         public MappingProfiles()
         {
             CreateMap<UserSocialMediaAddress, CreateUserSocialMediaAddressModel>().ReverseMap();
-
             CreateMap<UserSocialMediaAddress, CreatedUserSocialMediaAddressDto>()
-                .ForMember(a=>a.FirstName,opt=>opt.MapFrom(u=>u.User.FirstName))
-                .ForMember(a=>a.LastName,opt=>opt.MapFrom(u=>u.User.LastName))
+                .ForMember(a => a.FirstName, opt => opt.MapFrom(u => u.User.FirstName))
+                .ForMember(a => a.LastName, opt => opt.MapFrom(u => u.User.LastName))
+                .ReverseMap();
+
+            CreateMap<UserSocialMediaAddress, UpdateUserSocialMediaAddressModel>().ReverseMap();
+            CreateMap<UserSocialMediaAddress, UpdatedUserSocialMediaAddressDto>()
+                .ForMember(a => a.FirstName, opt => opt.MapFrom(u => u.User.FirstName))
+                .ForMember(a => a.LastName, opt => opt.MapFrom(u => u.User.LastName))
+                .ReverseMap();  
+            
+            CreateMap<UserSocialMediaAddress, DeletedUserSocialMediaAddressDto>()
+                .ForMember(a => a.FirstName, opt => opt.MapFrom(u => u.User.FirstName))
+                .ForMember(a => a.LastName, opt => opt.MapFrom(u => u.User.LastName))
                 .ReverseMap();
         }
     }

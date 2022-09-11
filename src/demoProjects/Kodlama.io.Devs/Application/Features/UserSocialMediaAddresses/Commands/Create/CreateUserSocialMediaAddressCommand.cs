@@ -21,7 +21,7 @@ namespace Application.Features.UserSocialMediaAddresses.Commands.Create
     {
         public CreateUserSocialMediaAddressModel Model { get; set; }
 
-        public string[] Roles { get; } = {  };
+        public string[] Roles { get; } = { "UserSocialMediaAddress.Add" };
 
         public class CreateUserSocialMediaAddressCommandHandler :IRequestHandler<CreateUserSocialMediaAddressCommand,
                                                                                  CreatedUserSocialMediaAddressDto>
