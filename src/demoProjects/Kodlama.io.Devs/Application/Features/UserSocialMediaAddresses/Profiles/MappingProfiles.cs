@@ -1,6 +1,9 @@
-﻿using Application.Features.UserSocialMediaAddresses.Dtos;
+﻿using Application.Features.UserSocialMediaAddresses.Dtos.DtoCommands;
+using Application.Features.UserSocialMediaAddresses.Dtos.DtoQueries;
 using Application.Features.UserSocialMediaAddresses.Models.Commands;
+using Application.Features.UserSocialMediaAddresses.Models.Queries;
 using AutoMapper;
+using Core.Persistence.Paging;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -30,6 +33,20 @@ namespace Application.Features.UserSocialMediaAddresses.Profiles
                 .ForMember(a => a.FirstName, opt => opt.MapFrom(u => u.User.FirstName))
                 .ForMember(a => a.LastName, opt => opt.MapFrom(u => u.User.LastName))
                 .ReverseMap();
+
+            CreateMap<UserSocialMediaAddress, DeletedUserSocialMediaAddressDto>()
+            .ForMember(a => a.FirstName, opt => opt.MapFrom(u => u.User.FirstName))
+            .ForMember(a => a.LastName, opt => opt.MapFrom(u => u.User.LastName))
+            .ReverseMap();
+
+            CreateMap<IPaginate<UserSocialMediaAddress>, UserSocialMediaAddressListModel>()
+            .ReverseMap();
+
+            CreateMap<UserSocialMediaAddress, UserSocialMediaAddressListDto>()
+                .ForMember(a => a.FirstName, opt => opt.MapFrom(u => u.User.FirstName))
+                .ForMember(a => a.LastName, opt => opt.MapFrom(u => u.User.LastName))
+                .ReverseMap();
+
         }
     }
 }

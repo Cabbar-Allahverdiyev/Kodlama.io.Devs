@@ -1,5 +1,5 @@
 ﻿using Application.Features.Authorizations.Rules;
-using Application.Features.UserSocialMediaAddresses.Dtos;
+using Application.Features.UserSocialMediaAddresses.Dtos.DtoCommands;
 using Application.Features.UserSocialMediaAddresses.Models.Commands;
 using Application.Features.UserSocialMediaAddresses.Rules;
 using Application.Services.Repositories;
@@ -51,6 +51,7 @@ namespace Application.Features.UserSocialMediaAddresses.Commands.Update
                 await _socialMediaBusinessRules.GithubUrlCanNotBeDuplicatedWhenUpdated(request);
 
                 userSocialMediaAddress = _mapper.Map<UserSocialMediaAddress>(request.Model);
+                userSocialMediaAddress.Id=request.Id;
                 userSocialMediaAddress = await _userSocialMediaAddressRepository.UpdateAsync(userSocialMediaAddress);
                 UpdatedUserSocialMediaAddressDto mappedSMAddressDto = _mapper.Map<UpdatedUserSocialMediaAddressDto>(userSocialMediaAddress);
                 return mappedSMAddressDto;

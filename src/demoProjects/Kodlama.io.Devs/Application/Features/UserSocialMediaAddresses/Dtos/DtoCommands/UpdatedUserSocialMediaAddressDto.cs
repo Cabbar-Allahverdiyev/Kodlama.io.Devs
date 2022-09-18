@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.UserSocialMediaAddresses.Dtos
+namespace Application.Features.UserSocialMediaAddresses.Dtos.DtoCommands
 {
-    public class CreatedUserSocialMediaAddressDto
+    public class UpdatedUserSocialMediaAddressDto
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

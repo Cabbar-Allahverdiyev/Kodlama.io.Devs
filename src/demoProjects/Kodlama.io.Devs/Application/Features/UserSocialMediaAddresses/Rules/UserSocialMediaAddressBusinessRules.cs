@@ -66,8 +66,6 @@ namespace Application.Features.UserSocialMediaAddresses.Rules
 
                 }
             }
-            if (result.Items.Count == 0)
-                throw new BusinessException(UserSocialMediaAddressBusinessRuleMessages.UserNotExists);
         }
 
         public async Task SocialMediaAddressExists(UserSocialMediaAddress? userSocialMediaAddress)

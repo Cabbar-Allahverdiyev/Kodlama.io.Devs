@@ -1,4 +1,4 @@
-﻿using Application.Features.UserSocialMediaAddresses.Dtos;
+﻿using Application.Features.UserSocialMediaAddresses.Dtos.DtoCommands;
 using Application.Features.UserSocialMediaAddresses.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
@@ -40,11 +40,12 @@ namespace Application.Features.UserSocialMediaAddresses.Commands.Delete
             public async Task<DeletedUserSocialMediaAddressDto> Handle(DeleteUserSocialMediaAddressCommand request, CancellationToken cancellationToken)
             {
                 UserSocialMediaAddress? userSocialMediaAddress = await _userSocialMediaAddressRepository.GetAsync(
-                                                                u=>u.Id==request.Id);
+                                                                u=>u.Id==request.Id
+                                                                );
                 await _socialMediaBusinessRules.SocialMediaAddressExists(userSocialMediaAddress);
 
                 userSocialMediaAddress = await _userSocialMediaAddressRepository.DeleteAsync(userSocialMediaAddress);
-                DeletedUserSocialMediaAddressDto mappedSocialMediaAddressDto =
+                DeletedUserSocialMediaAddressDto mappedSocialMediaAddressDto = 
                     _mapper.Map<DeletedUserSocialMediaAddressDto>(userSocialMediaAddress);
                 return mappedSocialMediaAddressDto;    
 

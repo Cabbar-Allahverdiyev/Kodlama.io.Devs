@@ -1,5 +1,5 @@
 ﻿using Application.Features.Authorizations.Rules;
-using Application.Features.UserSocialMediaAddresses.Dtos;
+using Application.Features.UserSocialMediaAddresses.Dtos.DtoCommands;
 using Application.Features.UserSocialMediaAddresses.Models.Commands;
 using Application.Features.UserSocialMediaAddresses.Rules;
 using Application.Services.Repositories;
